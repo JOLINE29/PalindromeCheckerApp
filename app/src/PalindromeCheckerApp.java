@@ -9,14 +9,10 @@ public class PalindromeCheckerApp {
         System.out.print("Input text: ");
         String str = sc.nextLine();
 
-        String reversed = "";
+        // Reverse using StringBuilder
+        String reversed = new StringBuilder(str).reverse().toString();
 
-
-        for (int i = str.length() - 1; i >= 0; i--) {
-            reversed += str.charAt(i);
-        }
-
-
+        // Check palindrome
         if (str.equalsIgnoreCase(reversed)) {
             System.out.println("Is it a Palindrome? : true");
         } else {
