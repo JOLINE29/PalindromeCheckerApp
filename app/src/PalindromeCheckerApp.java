@@ -6,18 +6,32 @@ public class PalindromeCheckerApp {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Input text: ");
-        String str = sc.nextLine();
+        // Take user input
+        System.out.print("Input : ");
+        String input = sc.nextLine();
 
-        // Reverse using StringBuilder
-        String reversed = new StringBuilder(str).reverse().toString();
+        // Convert string to character array
+        char[] chars = input.toCharArray();
 
-        // Check palindrome
-        if (str.equalsIgnoreCase(reversed)) {
-            System.out.println("Is it a Palindrome? : true");
-        } else {
-            System.out.println("Is it a Palindrome? : false");
+        // Initialize pointers
+        int start = 0;
+        int end = chars.length - 1;
+
+        // Assume palindrome initially
+        boolean isPalindrome = true;
+
+        // Compare characters
+        while (start < end) {
+            if (chars[start] != chars[end]) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
         }
+
+        // Output result
+        System.out.println("Is Palindrome? : " + isPalindrome);
 
         sc.close();
         }
