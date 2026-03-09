@@ -1,41 +1,46 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gut
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Scanner;
 
-import java.util.*;
 public class PalindromeCheckerApp {
+
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
 
         // Take input from user
-        System.out.print("Input : ");
-        String input = sc.nextLine();
+        System.out.print("Enter a word: ");
+        String word = sc.nextLine();
 
-        // Create Queue (FIFO)
-        Queue<Character> queue = new LinkedList<>();
+        Deque<Character> deque = new ArrayDeque<>();
 
-        // Create Stack (LIFO)
-        Stack<Character> stack = new Stack<>();
-
-        // Insert characters into both queue and stack
-        for (char c : input.toCharArray()) {
-            queue.add(c);   // FIFO
-            stack.push(c);  // LIFO
+        // Insert characters into deque
+        for (char ch : word.toCharArray()) {
+            deque.addLast(ch);
         }
 
-        // Assume palindrome
         boolean isPalindrome = true;
 
-        // Compare until queue is empty
-        while (!queue.isEmpty()) {
-            if (!queue.remove().equals(stack.pop())) {
+        // Compare front and rear
+        while (deque.size() > 1) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Output result
-        System.out.println("Is Palindrome? : " + isPalindrome);
+        // Print result
+        if (isPalindrome) {
+            System.out.println(word + " is a Palindrome");
+        } else {
+            System.out.println(word + " is Not a Palindrome");
+        }
 
         sc.close();
-        }
     }
+}
