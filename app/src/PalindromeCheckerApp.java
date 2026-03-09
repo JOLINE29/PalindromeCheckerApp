@@ -1,44 +1,92 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gut
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.Scanner;
 
+class Node {
+    char data;
+    Node next;
+
+    Node(char data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
 public class PalindromeCheckerApp {
+
+    static Node head = null;
+
+    // Insert node
+    static void insert(char data) {
+        Node newNode = new Node(data);
+
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+
+        Node temp = head;
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        temp.next = newNode;
+    }
+
+    // Reverse linked list
+    static Node reverse(Node head) {
+        Node prev = null;
+        Node current = head;
+        Node next = null;
+
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+
+        return prev;
+    }
+
+    // Check palindrome
+    static boolean isPalindrome() {
+
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        Node secondHalf = reverse(slow);
+        Node firstHalf = head;
+
+        while (secondHalf != null) {
+            if (firstHalf.data != secondHalf.data) {
+                return false;
+            }
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
+        }
+
+        return true;
+    }
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        // Take input from user
         System.out.print("Enter a word: ");
-        String word = sc.nextLine();
+        String str = sc.nextLine();
 
-        Deque<Character> deque = new ArrayDeque<>();
-
-        // Insert characters into deque
-        for (char ch : word.toCharArray()) {
-            deque.addLast(ch);
+        for (char c : str.toCharArray()) {
+            insert(c);
         }
 
-        boolean isPalindrome = true;
-
-        // Compare front and rear
-        while (deque.size() > 1) {
-            char front = deque.removeFirst();
-            char rear = deque.removeLast();
-
-            if (front != rear) {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        // Print result
-        if (isPalindrome) {
-            System.out.println(word + " is a Palindrome");
+        if (isPalindrome()) {
+            System.out.println(str + " is a Palindrome");
         } else {
-            System.out.println(word + " is Not a Palindrome");
+            System.out.println(str + " is Not a Palindrome");
         }
 
         sc.close();
