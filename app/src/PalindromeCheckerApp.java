@@ -1,75 +1,22 @@
 import java.util.Scanner;
 
-class Node {
-    char data;
-    Node next;
-
-    Node(char data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-
 public class PalindromeCheckerApp {
 
-    static Node head = null;
+    // Recursive function
+    static boolean isPalindrome(String str, int start, int end) {
 
-    // Insert node
-    static void insert(char data) {
-        Node newNode = new Node(data);
-
-        if (head == null) {
-            head = newNode;
-            return;
+        // Base condition
+        if (start >= end) {
+            return true;
         }
 
-        Node temp = head;
-        while (temp.next != null) {
-            temp = temp.next;
+        // If characters don't match
+        if (str.charAt(start) != str.charAt(end)) {
+            return false;
         }
 
-        temp.next = newNode;
-    }
-
-    // Reverse linked list
-    static Node reverse(Node head) {
-        Node prev = null;
-        Node current = head;
-        Node next = null;
-
-        while (current != null) {
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-        }
-
-        return prev;
-    }
-
-    // Check palindrome
-    static boolean isPalindrome() {
-
-        Node slow = head;
-        Node fast = head;
-
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        Node secondHalf = reverse(slow);
-        Node firstHalf = head;
-
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data) {
-                return false;
-            }
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
-
-        return true;
+        // Recursive call
+        return isPalindrome(str, start + 1, end - 1);
     }
 
     public static void main(String[] args) {
@@ -77,16 +24,12 @@ public class PalindromeCheckerApp {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter a word: ");
-        String str = sc.nextLine();
+        String word = sc.nextLine();
 
-        for (char c : str.toCharArray()) {
-            insert(c);
-        }
-
-        if (isPalindrome()) {
-            System.out.println(str + " is a Palindrome");
+        if (isPalindrome(word, 0, word.length() - 1)) {
+            System.out.println(word + " is a Palindrome");
         } else {
-            System.out.println(str + " is Not a Palindrome");
+            System.out.println(word + " is Not a Palindrome");
         }
 
         sc.close();
